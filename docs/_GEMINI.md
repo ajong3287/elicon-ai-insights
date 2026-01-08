@@ -1,0 +1,1 @@
+/Users/elicon_mark/.gemini/GEMINI.md
