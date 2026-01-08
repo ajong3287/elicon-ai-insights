@@ -1,9 +1,9 @@
 # PRD: AI 도구 인사이트 연구소 (AI Tools Insights Lab)
 
 **프로젝트 번호**: 47
-**버전**: 2.0
+**버전**: 3.0
 **작성일**: 2025-12-03
-**최종 수정**: 2026-01-08
+**최종 수정**: 2026-01-09
 **작성자**: 클로드코드
 **상태**: 활성 (Active) - 웹 배포 준비 중
 **프로젝트 번호 변경**: 45 → 47 (중복 해소, 2025-12-03)
@@ -462,6 +462,1010 @@ Lighthouse 목표: 90+ (모든 항목)
 
 ---
 
+## 🎯 SLO/SLI + Error Budget (서비스 수준 목표)
+
+### Service Level Objectives (SLO)
+
+**정적 사이트 가용성 (Vercel CDN 기반)**
+```yaml
+가용성 목표: 99.95% (월 22분 다운타임 허용)
+측정 방법: Vercel Status API + Uptime Robot
+검증 주기: 1분 간격 헬스체크
+리포팅: 주간 SLO 달성률 리포트
+```
+
+**성능 목표 (Core Web Vitals)**
+```yaml
+LCP (Largest Contentful Paint): < 2.5s (p75)
+FID (First Input Delay): < 100ms (p75)
+CLS (Cumulative Layout Shift): < 0.1 (p75)
+TTFB (Time to First Byte): < 600ms (p75)
+```
+
+**콘텐츠 신선도**
+```yaml
+인사이트 발행 주기: 주 1회 이상
+트렌드 업데이트: 격주 1회
+PoC 결과 공유: 월 1회
+자동 배포 성공률: 99%
+```
+
+### Service Level Indicators (SLI)
+
+**측정 지표**
+```yaml
+# 가용성
+- Vercel CDN 응답률 (성공/총 요청)
+- 빌드 성공률 (성공/총 빌드)
+
+# 성능
+- Lighthouse 점수 (Performance/Accessibility/Best Practices/SEO)
+- Core Web Vitals (실제 사용자 측정)
+
+# 품질
+- 서종원어록 40점 만점 기준 (30점 이상 게시)
+- 문법/맞춤법 오류율 (< 0.1%)
+```
+
+### Error Budget 정책
+
+**월간 Error Budget**
+```yaml
+가용성 Error Budget: 0.05% (월 22분)
+성능 Error Budget: p75 목표 미달 5%
+품질 Error Budget: 서종원어록 30점 미만 10%
+```
+
+**Error Budget 소진 시 대응**
+```
+50% 소진:
+  - 알림: 서대표님 + 클로드코드
+  - 조치: 근본 원인 분석 (RCA) 시작
+
+75% 소진:
+  - 조치: 신규 기능 개발 중단
+  - 우선순위: 안정성/성능 개선으로 전환
+
+100% 소진:
+  - 조치: 모든 배포 중단
+  - 복구: Error Budget 회복 시까지 개선 작업만
+```
+
+**검증 방법**
+- 주간 SLO 리포트 (Google Sheets)
+- Vercel Analytics 대시보드
+- Lighthouse CI 자동 측정 (PR마다)
+
+---
+
+## 📈 Capacity Planning & 부하 모델
+
+### 트래픽 예측 모델
+
+**Phase별 예상 트래픽**
+```yaml
+Phase 1 (MVP, 1개월):
+  일일 방문자: 10-50명
+  페이지뷰: 50-200
+  대역폭: < 1GB/월
+
+Phase 2 (콘텐츠 확장, 3개월):
+  일일 방문자: 100-500명
+  페이지뷰: 500-2,000
+  대역폭: 5-10GB/월
+
+Phase 3 (자동화, 6개월):
+  일일 방문자: 500-1,000명
+  페이지뷰: 2,000-5,000
+  대역폭: 20-30GB/월
+
+Phase 4 (고도화, 12개월):
+  일일 방문자: 1,000-3,000명
+  페이지뷰: 5,000-15,000
+  대역폭: 50-100GB/월
+```
+
+### 리소스 병목 분석
+
+**Vercel 무료 플랜 제한**
+```yaml
+대역폭: 100GB/월
+빌드 실행 시간: 6,000분/월
+서버리스 함수: 100GB-Hours/월
+동시 빌드: 1개
+
+병목 예상 시점: Phase 4 (12개월)
+  - 대역폭 100GB 초과 가능성: 50%
+  - 해결책: Vercel Pro 업그레이드 ($20/월)
+```
+
+### 스케일링 트리거 및 정책
+
+**자동 스케일링 (Vercel CDN)**
+```yaml
+트리거: 트래픽 급증 (평소 대비 5배)
+대응: Vercel Edge Network 자동 분산
+보장: 최대 동시 접속 100만명 처리 가능
+```
+
+**수동 스케일링 필요 시점**
+```yaml
+조건 1: 월 대역폭 80GB 이상 (80% 사용)
+  → 조치: 이미지 최적화, WebP 강제 변환
+
+조건 2: 빌드 시간 월 5,000분 이상 (83% 사용)
+  → 조치: 증분 빌드 활성화, 캐시 최적화
+
+조건 3: Lighthouse 점수 90 미만
+  → 조치: 코드 스플리팅, lazy loading 적용
+```
+
+**비용 최적화 전략**
+```yaml
+1. 이미지 최적화:
+   - WebP/AVIF 자동 변환
+   - 적절한 크기 조절 (max 1920px)
+   - lazy loading
+
+2. 캐시 전략:
+   - 정적 자산: 1년 (immutable)
+   - HTML: 1시간 (stale-while-revalidate)
+   - API 응답: N/A (정적 사이트)
+
+3. CDN 활용:
+   - Vercel Edge Network 최대 활용
+   - 지리적 분산 (글로벌 CDN)
+```
+
+---
+
+## 🛡️ DR/BCP (재해복구 및 비즈니스 연속성)
+
+### 재해 시나리오 정의
+
+**시나리오 1: Vercel 플랫폼 장애**
+```yaml
+발생 확률: 연 0.05% (99.95% SLA)
+영향도: 서비스 전체 중단
+복구 목표:
+  RPO (Recovery Point Objective): 0분 (Git 기반)
+  RTO (Recovery Time Objective): 30분
+```
+
+**시나리오 2: GitHub 장애**
+```yaml
+발생 확률: 연 0.1%
+영향도: 배포 불가, 기존 서비스는 정상
+복구 목표:
+  RPO: 0분 (로컬 백업)
+  RTO: 1시간 (대체 Git 호스팅)
+```
+
+**시나리오 3: 데이터 손실 (악의적 커밋)**
+```yaml
+발생 확률: 연 1%
+영향도: 콘텐츠 손실
+복구 목표:
+  RPO: 24시간
+  RTO: 2시간
+```
+
+### 백업 전략
+
+**Git 기반 백업 (자동)**
+```yaml
+주 백업: GitHub (ajong3287/elicon-ai-insights)
+보조 백업 1: 로컬 MacBook Air (.git/)
+보조 백업 2: Time Machine (선택)
+
+백업 주기:
+  - Git: 실시간 (매 커밋)
+  - 로컬: git pull 시
+  - Time Machine: 1시간마다
+```
+
+**콘텐츠 백업 (수동)**
+```yaml
+Markdown 파일: insights/*.md
+설정 파일: package.json, next.config.mjs 등
+이미지: public/images/
+
+백업 위치: archived_files/ (분기별)
+보존 기간: 2년
+```
+
+### 복구 절차 (Runbook)
+
+**Vercel 장애 시 복구**
+```bash
+# 1. 대체 플랫폼 배포 (Netlify/Cloudflare Pages)
+npm run build
+# out/ 폴더를 대체 플랫폼에 업로드
+
+# 2. DNS 변경 (선택)
+# 커스텀 도메인 사용 시 CNAME 변경
+
+# 복구 시간: 30분
+```
+
+**GitHub 장애 시 복구**
+```bash
+# 1. 로컬 리포지토리 확인
+git status
+git log
+
+# 2. 대체 Git 호스팅 (GitLab/Bitbucket)
+git remote add backup https://gitlab.com/...
+git push backup main
+
+# 3. Vercel 연동 변경
+# Vercel 대시보드에서 GitLab 연결
+
+# 복구 시간: 1시간
+```
+
+**데이터 손실 시 복구**
+```bash
+# 1. Git 히스토리에서 복구
+git log --all -- insights/
+git checkout <commit-hash> -- insights/
+
+# 2. archived_files/ 백업 확인
+cp archived_files/insights_backup_YYYYMMDD/*.md insights/
+
+# 3. 검증 후 배포
+git add insights/
+git commit -m "Restore from backup"
+git push
+
+# 복구 시간: 2시간
+```
+
+### 복구 리허설
+
+**월간 복구 훈련**
+```yaml
+일정: 매월 첫째 주 금요일
+시간: 30분
+참여자: 서대표님 + 클로드코드
+
+시나리오:
+  1. Git reset --hard HEAD~10 (10개 커밋 삭제)
+  2. archived_files/에서 복구
+  3. 복구 시간 측정
+  4. 개선 사항 기록
+
+목표: RTO 2시간 이내 달성률 100%
+```
+
+---
+
+## 🔐 Threat Model (STRIDE) + 데이터 흐름도
+
+### 데이터 흐름도 (DFD)
+
+```
+┌──────────────┐
+│   사용자      │
+└──────┬───────┘
+       │ (1) HTTPS
+       ▼
+┌──────────────────────────────┐
+│   Vercel CDN (Edge)          │
+│   - TLS 1.3 강제             │
+│   - HSTS 활성화              │
+└──────┬───────────────────────┘
+       │ (2) 정적 HTML
+       ▼
+┌──────────────────────────────┐
+│   정적 사이트 (out/)         │
+│   - XSS 불가 (정적)          │
+│   - SQL Injection 불가       │
+└──────┬───────────────────────┘
+       │
+       ▼
+┌──────────────────────────────┐
+│   GitHub Repository          │
+│   - 버전 관리                │
+│   - 무결성 검증 (SHA)        │
+└──────────────────────────────┘
+
+데이터 흐름:
+(1) 사용자 → Vercel CDN: HTTPS (암호화)
+(2) CDN → 정적 파일: 압축 + 캐싱
+(3) 관리자 → GitHub: SSH/HTTPS (인증)
+```
+
+### STRIDE 위협 분석
+
+**S - Spoofing (신원 위조)**
+```yaml
+위협: GitHub 계정 탈취
+영향도: 높음 (악의적 콘텐츠 배포)
+완화책:
+  - GitHub 2FA 필수
+  - SSH 키 패스프레이즈
+  - Git commit 서명 (GPG)
+잔존 리스크: 낮음
+```
+
+**T - Tampering (변조)**
+```yaml
+위협: Git 히스토리 변조
+영향도: 중간 (콘텐츠 신뢰도 하락)
+완화책:
+  - Git 보호된 브랜치 (main)
+  - Vercel 자동 빌드 검증
+  - 백업 3중화 (GitHub/로컬/Time Machine)
+잔존 리스크: 매우 낮음
+```
+
+**R - Repudiation (부인)**
+```yaml
+위협: 배포 이력 부인
+영향도: 낮음
+완화책:
+  - Git 커밋 히스토리 (불변)
+  - Vercel 배포 로그 (90일 보존)
+  - Co-Authored-By 서명
+잔존 리스크: 없음
+```
+
+**I - Information Disclosure (정보 노출)**
+```yaml
+위협: .env 파일 노출
+영향도: 없음 (API 키 미사용)
+완화책:
+  - .gitignore 설정
+  - Vercel Environment Variables (미사용)
+잔존 리스크: 없음
+```
+
+**D - Denial of Service (서비스 거부)**
+```yaml
+위협: DDoS 공격
+영향도: 중간 (서비스 일시 중단)
+완화책:
+  - Vercel DDoS 보호 (자동)
+  - Rate Limiting (Vercel 기본)
+  - CDN 분산 (글로벌)
+잔존 리스크: 낮음 (Vercel 책임)
+```
+
+**E - Elevation of Privilege (권한 상승)**
+```yaml
+위협: 관리자 권한 탈취
+영향도: 높음
+완화책:
+  - GitHub Organization (향후)
+  - 역할 기반 접근 (Owner/Admin/Write)
+  - 감사 로그 (GitHub Audit Log)
+잔존 리스크: 낮음
+```
+
+### 보안 점검 체크리스트 (월간)
+
+```yaml
+□ GitHub 2FA 활성 확인
+□ SSH 키 만료일 확인 (1년마다 갱신)
+□ Git 커밋 서명 검증
+□ Vercel 배포 로그 이상 확인
+□ HTTPS 인증서 자동 갱신 확인
+□ CSP 헤더 설정 검증
+□ Lighthouse 보안 점수 100점 유지
+```
+
+---
+
+## 📊 Observability (Logs/Metrics/Traces)
+
+### 3종 데이터 표준화
+
+**Logs (로그)**
+```yaml
+도구: Vercel Logs
+형식: JSON 구조화
+보존 기간: 90일
+레벨: ERROR, WARN, INFO
+```
+
+**Metrics (메트릭)**
+```yaml
+도구: Vercel Analytics + Speed Insights
+수집 항목:
+  - 페이지뷰
+  - 방문자 수
+  - Core Web Vitals (LCP, FID, CLS)
+  - 디바이스/지역 분포
+보존 기간: 무제한
+```
+
+**Traces (추적)**
+```yaml
+도구: N/A (정적 사이트)
+향후 계획:
+  - Phase 4: OpenTelemetry 도입 (API 추가 시)
+  - Correlation ID 적용
+```
+
+### Golden Signals 기반 알림
+
+**4가지 Golden Signals**
+```yaml
+1. Latency (지연):
+   측정: TTFB, LCP
+   임계값: p95 > 3s
+   알림: Slack (향후)
+
+2. Traffic (트래픽):
+   측정: 페이지뷰
+   임계값: 전일 대비 300% 급증
+   알림: 이메일
+
+3. Errors (에러):
+   측정: 빌드 실패, 404 에러
+   임계값: 빌드 실패 > 2회/일
+   알림: GitHub Actions 이메일
+
+4. Saturation (포화):
+   측정: Vercel 대역폭 사용률
+   임계값: 80% 초과
+   알림: Vercel 대시보드 경고
+```
+
+### 알림 정책 (On-Call)
+
+**알림 우선순위**
+```yaml
+P0 (긴급):
+  - 서비스 완전 중단 (Vercel 장애)
+  - 알림: 즉시 전화 + SMS
+  - 대응: 15분 이내
+
+P1 (높음):
+  - 빌드 실패 연속 3회
+  - 알림: 이메일 + Slack
+  - 대응: 1시간 이내
+
+P2 (중간):
+  - Lighthouse 점수 80 미만
+  - 알림: 이메일
+  - 대응: 24시간 이내
+
+P3 (낮음):
+  - 대역폭 80% 사용
+  - 알림: 주간 리포트
+  - 대응: 다음 배포 시
+```
+
+---
+
+## ✅ 품질 게이트 (서종원어록 연동)
+
+### 서종원어록 40점 만점 기준
+
+**자동 채점 시스템**
+```yaml
+도구: 44번 AI학습자동화시스템
+기준: /Users/elicon_mark/서종원어록.md § 5대 원칙
+
+채점 항목 (각 10점):
+  1. 풍부한 자료 기반 (3개 이상 출처)
+  2. 깊은 맥락 이해 (배경 설명)
+  3. 감동/재미/교훈 (3요소 포함)
+  4. 일관성 유지 (시리즈 톤앤매너)
+
+통과 기준: 30점 이상 (75%)
+미달 시: 재작성 필수
+```
+
+### 품질 검증 프로세스
+
+**3단계 검증**
+```yaml
+1단계: 자동 채점 (44번 시스템)
+  - 서종원어록 40점 기준
+  - 문법/맞춤법 검사
+  - 통과: 30점 이상
+
+2단계: 기술 검증 (Lighthouse)
+  - Performance: 90+
+  - Accessibility: 100
+  - Best Practices: 100
+  - SEO: 100
+
+3단계: 최종 승인 (서대표님)
+  - 전략적 타당성
+  - 브랜드 정합성
+  - 승인 → 배포
+```
+
+### 품질 메트릭 대시보드
+
+**주간 품질 리포트**
+```yaml
+콘텐츠 품질:
+  - 평균 서종원어록 점수
+  - 30점 이상 비율
+  - 재작성 횟수
+
+기술 품질:
+  - 평균 Lighthouse 점수
+  - Core Web Vitals p75
+  - 빌드 성공률
+
+사용자 경험:
+  - 평균 체류 시간
+  - 이탈률
+  - 재방문율
+```
+
+---
+
+## 🔄 변경 관리 및 배포 프로세스
+
+### GitFlow 전략
+
+**브랜치 전략**
+```yaml
+main: 프로덕션 (배포)
+  - 보호됨 (직접 push 금지)
+  - PR + 리뷰 필수
+  - 자동 배포 (Vercel)
+
+develop: 개발 (선택, 향후)
+  - 미리보기 배포
+  - 통합 테스트
+
+feature/*: 기능 개발
+  - 예: feature/ai-tools-comparison
+  - develop 또는 main으로 PR
+```
+
+### 배포 프로세스
+
+**자동 배포 (CI/CD)**
+```yaml
+트리거: main 브랜치 push
+파이프라인:
+  1. GitHub Actions:
+     - Lint (ESLint)
+     - Type Check (TypeScript)
+     - Build (npm run build)
+     - Lighthouse CI (품질 검증)
+
+  2. Vercel:
+     - 빌드 (Next.js)
+     - 배포 (CDN)
+     - 알림 (이메일)
+
+소요 시간: 3-5분
+성공률 목표: 99%
+```
+
+### 롤백 정책
+
+**자동 롤백 조건**
+```yaml
+조건 1: 빌드 실패
+  → 조치: 배포 중단, 이전 버전 유지
+
+조건 2: Lighthouse 점수 < 80
+  → 조치: 경고, 수동 검토
+
+조건 3: 404 에러율 > 5%
+  → 조치: 즉시 롤백 (수동)
+```
+
+**수동 롤백 절차**
+```bash
+# 1. 이전 커밋 확인
+git log --oneline
+
+# 2. 롤백
+git revert <commit-hash>
+git push
+
+# 3. Vercel 자동 재배포
+# (약 3분 소요)
+
+# 복구 시간: 5분
+```
+
+---
+
+## 📜 규정 준수 (Compliance)
+
+### 저작권 정책
+
+**콘텐츠 출처 명시**
+```yaml
+원칙: 모든 인용은 출처 명시
+형식:
+  - 유튜브 영상: 채널명 + 영상 제목 + URL
+  - 뉴스 기사: 언론사 + 기사 제목 + URL
+  - AI 도구: 공식 문서 + 버전
+
+라이선스:
+  - 엘리콘 오리지널: © 2026 ELICON
+  - 인용 콘텐츠: Fair Use (공정 이용)
+```
+
+### 개인정보 보호
+
+**데이터 수집 정책**
+```yaml
+수집 데이터: 없음 (정적 사이트)
+쿠키: 없음
+Analytics: Vercel Analytics (익명)
+
+GDPR 준수:
+  - 개인정보 수집 없음
+  - 쿠키 배너 불필요
+  - GDPR 적용 대상 아님
+
+향후 계획:
+  - 댓글 시스템 (Giscus): GitHub 계정 기반
+  - 뉴스레터 (선택): 명시적 동의 (Opt-in)
+```
+
+### 접근성 (Accessibility)
+
+**WCAG 2.1 AA 준수**
+```yaml
+필수 요구사항:
+  - 키보드 탐색 가능
+  - 스크린 리더 호환
+  - 명도 대비 4.5:1 이상
+  - 대체 텍스트 (이미지)
+
+검증:
+  - Lighthouse Accessibility: 100점
+  - axe DevTools 자동 테스트
+  - 수동 키보드 탐색 테스트 (월간)
+```
+
+---
+
+## 🚨 Runbook & Incident Response
+
+### 장애 대응 플레이북
+
+**장애 레벨 정의**
+```yaml
+L1 (Critical):
+  - 서비스 완전 중단
+  - 대응 시간: 15분
+  - 예: Vercel 플랫폼 장애
+
+L2 (High):
+  - 주요 기능 불가
+  - 대응 시간: 1시간
+  - 예: 빌드 실패 연속 3회
+
+L3 (Medium):
+  - 성능 저하
+  - 대응 시간: 4시간
+  - 예: Lighthouse 점수 < 80
+
+L4 (Low):
+  - 사소한 문제
+  - 대응 시간: 24시간
+  - 예: 링크 오타
+```
+
+### 장애 대응 프로세스
+
+**5단계 대응**
+```yaml
+1. 감지 (Detection):
+   - 도구: Vercel Status, Uptime Robot
+   - 알림: 이메일, Slack
+
+2. 원인 추적 (Investigation):
+   - Vercel Logs 확인
+   - GitHub Actions 로그
+   - Lighthouse 리포트
+
+3. 완화 (Mitigation):
+   - 임시 조치 (예: 정적 페이지 배포)
+   - 사용자 공지 (Status Page)
+
+4. 복구 (Recovery):
+   - 근본 원인 수정
+   - 배포 및 검증
+   - 모니터링 강화
+
+5. 포스트모템 (Post-mortem):
+   - 근본 원인 분석 (RCA)
+   - 재발 방지책
+   - 문서화 (logs/)
+```
+
+### Runbook 예시
+
+**빌드 실패 시**
+```bash
+# 1. 로그 확인
+gh run list --limit 5
+gh run view <run-id>
+
+# 2. 로컬 재현
+npm install
+npm run build
+
+# 3. 수정
+# (에러에 따라 다름)
+
+# 4. 재배포
+git add .
+git commit -m "Fix build error"
+git push
+
+# 5. 검증
+# Vercel 대시보드 확인
+```
+
+---
+
+## 📋 데이터 거버넌스
+
+### 콘텐츠 관리 정책
+
+**데이터 등급 분류**
+```yaml
+P0 (공개):
+  - 모든 인사이트 (insights/*.md)
+  - 보존 기간: 무제한
+  - 백업: Git + archived_files/
+
+P1 (내부):
+  - PRD, 작업 로그 (docs/, logs/)
+  - 보존 기간: 2년
+  - 백업: Git only
+
+P2 (임시):
+  - 빌드 산출물 (.next/, out/)
+  - 보존 기간: 빌드마다 재생성
+  - 백업: 불필요
+
+P3 (민감):
+  - 환경변수 (.env)
+  - 보존 기간: N/A (미사용)
+  - 백업: 불필요
+```
+
+### 데이터 생명주기
+
+**생성 → 사용 → 보관 → 파기**
+```yaml
+생성:
+  - 44-46번 자동 파이프라인
+  - 수동 작성 (서대표님 + 클로드코드)
+
+사용:
+  - 웹사이트 게시 (Vercel)
+  - 내부 의사결정 (서대표님)
+
+보관:
+  - GitHub (무제한)
+  - archived_files/ (분기별)
+
+파기:
+  - 조건: 2년 미활용 + 서대표님 승인
+  - 방법: Git soft delete (히스토리 유지)
+```
+
+### 콘텐츠 품질 관리
+
+**검수 프로세스**
+```yaml
+1. 자동 검수:
+   - 서종원어록 40점 기준
+   - 문법/맞춤법 (Grammarly)
+   - 표절 검사 (Copyscape, 선택)
+
+2. 수동 검수:
+   - 사실 확인 (Fact Check)
+   - 출처 검증
+   - 브랜드 정합성
+
+3. 승인:
+   - 서대표님 최종 승인
+   - 승인 후 배포
+```
+
+---
+
+## 🤖 AI/ML 운영 (MLOps)
+
+### 44-46번 파이프라인 품질 관리
+
+**모델 카드 (44번 AI학습자동화)**
+```yaml
+모델: 서종원어록 40점 채점기
+정확도: 90% (사람 평가 대비)
+FP (False Positive): 5% (너무 높게 채점)
+FN (False Negative): 5% (너무 낮게 채점)
+임계값: 30점 (75%)
+편향 점검: 월 1회 (샘플 100개)
+```
+
+**드리프트 감지**
+```yaml
+지표: 평균 점수 추이
+임계값: 전월 대비 ±10점
+알림: 드리프트 감지 시 이메일
+재학습 조건:
+  - 드리프트 3회 연속
+  - FP/FN 10% 초과
+  - 서대표님 요청
+```
+
+### 자동화 파이프라인 모니터링
+
+**44번: 유튜브 학습**
+```yaml
+SLI:
+  - 자막 추출 성공률: 95%
+  - 분석 완료 시간: < 5분
+
+SLO:
+  - 일일 학습 영상: 3개 이상
+  - 에러율: < 5%
+
+알림:
+  - 자막 추출 실패 연속 3회
+  - 분석 시간 10분 초과
+```
+
+**45번: 매일 AI 스크랩북**
+```yaml
+SLI:
+  - 스크랩 성공률: 90%
+  - 신규 뉴스 발견: 10개/일
+
+SLO:
+  - 일일 스크랩 빈도: 1회
+  - 중복 제거율: 95%
+
+알림:
+  - 스크랩 실패 2일 연속
+  - 신규 뉴스 < 5개
+```
+
+**46번: 유튜브 심층학습**
+```yaml
+SLI:
+  - 5레이어 분석 완료율: 95%
+  - ICE 랭킹 정확도: 85%
+
+SLO:
+  - 분석 시간: < 15분
+  - 인사이트 품질: 30점 이상
+
+알림:
+  - 분석 실패
+  - 품질 30점 미만 3회 연속
+```
+
+### AI 리스크 관리
+
+**편향 및 윤리 점검**
+```yaml
+월간 체크:
+  - 샘플 100개 수동 검토
+  - 편향 지표 측정 (성별/지역/주제)
+  - 윤리 위반 사례 점검
+
+조치:
+  - 편향 10% 초과 → 재학습
+  - 윤리 위반 → 즉시 수정
+```
+
+---
+
+## 🛡️ 보안 강화 로드맵
+
+### Phase 1: 현재 (정적 사이트)
+
+**적용 완료**
+```yaml
+✅ HTTPS (Vercel SSL)
+✅ HSTS (Vercel 기본)
+✅ 정적 콘텐츠 (XSS/SQLi 불가)
+✅ Git 보호된 브랜치
+```
+
+### Phase 2: 단기 (1-3개월)
+
+**CSP (Content Security Policy)**
+```yaml
+목표: XSS 방어 강화
+구현:
+  # next.config.mjs
+  headers: [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          key: 'Content-Security-Policy',
+          value: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
+        }
+      ]
+    }
+  ]
+
+검증: Lighthouse Security 100점
+```
+
+**SRI (Subresource Integrity)**
+```yaml
+목표: CDN 변조 방어
+구현: Next.js 자동 적용
+검증: 외부 스크립트 해시 검증
+```
+
+### Phase 3: 중기 (3-6개월)
+
+**WAF (Web Application Firewall)**
+```yaml
+도구: Vercel Firewall (Pro 플랜)
+기능:
+  - Rate Limiting (IP별)
+  - Bot Score 기반 차단
+  - IP Reputation 확인
+  - Geo-blocking (선택)
+
+비용: $20/월 (Vercel Pro)
+ROI: DDoS 방어 + 대역폭 절감
+```
+
+**봇 방어**
+```yaml
+도구: Vercel Bot Protection
+기능:
+  - hCaptcha 통합
+  - Bot Score 자동 감지
+  - 의심 IP 차단
+
+적용: 댓글/문의 폼 (Phase 4)
+```
+
+### Phase 4: 장기 (6-12개월)
+
+**RBAC → ABAC 전환**
+```yaml
+현재: 인증 없음 (공개 사이트)
+RBAC 도입 (Phase 3):
+  - Roles: Admin, Editor, Viewer
+  - 관리자 대시보드 (Vercel Auth)
+
+ABAC 확장 (Phase 4):
+  - 속성 기반 권한:
+    * 테넌트 (엘리콘 vs 외부)
+    * 요금제 (무료 vs 프리미엄)
+    * 리스크 스코어 (0-100)
+  - 동적 권한 변경:
+    * 리스크 스코어 > 80 → 읽기 전용
+    * 요금제 만료 → 접근 차단
+```
+
+**Zero Trust 아키텍처**
+```yaml
+원칙:
+  - 모든 요청 검증
+  - 최소 권한 (Least Privilege)
+  - 암시적 신뢰 제거
+
+구현:
+  - Vercel Edge Middleware
+  - JWT 토큰 검증
+  - 세션 관리 (Redis)
+```
+
+---
+
 ## 💰 예산 및 리소스
 
 ### 초기 비용 (무료)
@@ -514,6 +1518,7 @@ Vercel Pro: $20/월 (트래픽 초과 시)
 |------|------|----------|
 | 2025-12-03 | 1.0 | PRD 작성, 프로젝트 번호 변경 (45 → 47) |
 | 2026-01-08 | 2.0 | 전문가급 PRD 업그레이드: 기술 스택, 아키텍처, 데이터 모델, 배포 전략, 보안/성능, 예산, 웹 배포 전략 추가 |
+| 2026-01-09 | 3.0 | **엔터프라이즈급 PRD 격상**: SLO/SLI + Error Budget, Capacity Planning, DR/BCP, STRIDE Threat Model, Observability (Logs/Metrics/Traces), 품질 게이트 (서종원어록 연동), 변경 관리, 규정 준수, Runbook & Incident Response, 데이터 거버넌스, AI/ML 운영 (MLOps), 보안 강화 로드맵 (CSP/WAF/ABAC) - 총 12개 엔터프라이즈급 섹션 추가. **검증 가능한 지표 및 정책 명시**로 감사 대응 및 운영 투명성 확보. |
 
 ---
 
