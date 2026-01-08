@@ -135,6 +135,7 @@ Copyright © 2026 ELICON. All rights reserved.
 
 ---
 
-**배포 URL**: https://elicon-ai-insights.vercel.app (배포 후 업데이트)
+**배포 URL**: https://elicon-ai-insights-ka5eqp48r-ajong3287-4974s-projects.vercel.app
 **GitHub**: https://github.com/ajong3287/elicon-ai-insights
+**Vercel Dashboard**: https://vercel.com/ajong3287-4974s-projects/elicon-ai-insights
 **문의**: ELICON
