@@ -6,15 +6,27 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38B2AC)](https://tailwindcss.com/)
 
+## 🌐 배포 정보
+
+| 항목 | 정보 |
+|------|------|
+| **Production URL** | https://elicon-ai-insights-n1i2ea530-ajong3287-4974s-projects.vercel.app |
+| **Vercel Dashboard** | https://vercel.com/ajong3287-4974s-projects/elicon-ai-insights |
+| **상태** | ✅ 활성 (Phase 1 완료) |
+| **마지막 배포** | 2026-01-09 |
+| **접근 권한** | 내부 (Vercel 주소) |
+| **Phase** | Phase 1: 내부 지식 관리 ✅ |
+| **커스텀 도메인** | Phase 4 이후 고려 (insights.elicon.co.kr) |
+
 ## 🎯 프로젝트 비전
 
-AI 도구 및 트렌드에 대한 인사이트를 수집·분석·연구하여 **공개 웹사이트**로 제공하고, 엘리콘의 AI 전략 수립에 활용하는 **지식 플랫폼**.
+AI 도구 및 트렌드에 대한 인사이트를 수집·분석·연구하여 **내부 지식 플랫폼 (Phase 1)**으로 제공하고, 엘리콘의 AI 전략 수립에 활용. 향후 **대외 공개 (Phase 2 이후)** 고려.
 
 ### 핵심 목표
-1. **인사이트 허브**: 최신 AI 도구/트렌드 분석을 웹으로 공개
-2. **전략 자산**: 엘리콘 내부 의사결정 지원
-3. **브랜드 구축**: AI 전문성 대외 홍보
-4. **자동화**: AI 학습 → 분석 → 웹 배포 파이프라인 구축
+1. **인사이트 허브**: 최신 AI 도구/트렌드 분석을 체계적 관리
+2. **전략 자산**: 엘리콘 내부 의사결정 지원 (우선순위)
+3. **자동화**: AI 학습 → 분석 → 웹 배포 파이프라인 구축
+4. **브랜드 구축**: AI 전문성 대외 홍보 (Phase 2 이후)
 
 ## 🚀 기술 스택
 
@@ -106,17 +118,27 @@ Vercel 대시보드에서 Environment Variables 설정:
 
 ## 📊 주요 기능
 
-### 현재 (MVP)
+### Phase 1 완료 ✅
 - ✅ 홈페이지
-- ✅ 프로젝트 소개
-- ✅ 통계 요약
-- ✅ 주요 기능 소개
+- ✅ 인사이트 목록 페이지
+- ✅ 트렌드 분석 페이지
+- ✅ 3개 샘플 인사이트 (평균 품질 87%)
+- ✅ Vercel 배포
 
-### 다음 단계 (Phase 2)
-- 📝 인사이트 목록 페이지
-- 📝 개별 인사이트 상세 페이지
-- 📝 트렌드 대시보드
-- 📝 AI 도구 디렉토리
+### Phase 2: 콘텐츠 확장 (다음 단계)
+- 📝 10개 이상 인사이트 축적
+- 📝 44-46번 프로젝트 자동 연동
+- 📝 개별 인사이트 상세 페이지 (/insights/[id])
+- 📝 내부 피드백 수집
+
+### Phase 3: 자동화 (1개월)
+- 📝 인사이트 생성 자동화
+- 📝 품질 자동 검증
+
+### Phase 4: 대외 공개 (선택적)
+- 📝 커스텀 도메인 (insights.elicon.co.kr)
+- 📝 SEO 최적화
+- 📝 트렌드 대시보드 고도화
 
 ## 🔗 연계 프로젝트
 
@@ -135,7 +157,6 @@ Copyright © 2026 ELICON. All rights reserved.
 
 ---
 
-**배포 URL**: https://elicon-ai-insights-ka5eqp48r-ajong3287-4974s-projects.vercel.app
 **GitHub**: https://github.com/ajong3287/elicon-ai-insights
-**Vercel Dashboard**: https://vercel.com/ajong3287-4974s-projects/elicon-ai-insights
 **문의**: ELICON
+**관리**: [총무]00_ELICON_PMO/DASHBOARD/deployed_projects.md
