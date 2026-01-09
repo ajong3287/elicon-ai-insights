@@ -43,9 +43,9 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">3</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">10</div>
                 <div className="text-gray-600">AI 도구 분석</div>
-                <div className="text-sm text-gray-500 mt-1">평균 품질: 87%</div>
+                <div className="text-sm text-gray-500 mt-1">평균 품질: 90%</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-blue-600 mb-2">1</div>
