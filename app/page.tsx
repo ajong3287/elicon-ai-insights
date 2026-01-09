@@ -43,16 +43,19 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">15+</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">3</div>
                 <div className="text-gray-600">AI 도구 분석</div>
+                <div className="text-sm text-gray-500 mt-1">평균 품질: 87%</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">10+</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">1</div>
                 <div className="text-gray-600">트렌드 리포트</div>
+                <div className="text-sm text-gray-500 mt-1">5개 출처 검증</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">5+</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">1</div>
                 <div className="text-gray-600">PoC 프로젝트</div>
+                <div className="text-sm text-gray-500 mt-1">재현 가능성: 100%</div>
               </div>
             </div>
           </div>
@@ -91,30 +94,30 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <h3 className="text-3xl font-bold text-center mb-12">최신 인사이트</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-white p-6 rounded-lg border">
+              <a href="/insights" className="bg-white p-6 rounded-lg border hover:shadow-lg transition">
                 <div className="text-sm text-blue-600 font-semibold mb-2">AI 도구</div>
-                <h4 className="text-xl font-bold mb-2">곧 공개됩니다</h4>
+                <h4 className="text-xl font-bold mb-2">ChatGPT 심층 분석</h4>
                 <p className="text-gray-600 mb-4">
-                  첫 번째 인사이트를 준비 중입니다.
+                  업무 생산성 30-50% 향상. 무료 vs 유료 플랜 ROI 비교 분석.
                 </p>
-                <div className="text-sm text-gray-400">Coming Soon</div>
-              </div>
-              <div className="bg-white p-6 rounded-lg border">
+                <div className="text-sm text-blue-600 font-semibold">자세히 보기 →</div>
+              </a>
+              <a href="/trends" className="bg-white p-6 rounded-lg border hover:shadow-lg transition">
                 <div className="text-sm text-blue-600 font-semibold mb-2">트렌드</div>
-                <h4 className="text-xl font-bold mb-2">곧 공개됩니다</h4>
+                <h4 className="text-xl font-bold mb-2">2026 AI 트렌드 TOP 10</h4>
                 <p className="text-gray-600 mb-4">
-                  최신 AI 트렌드 분석을 준비 중입니다.
+                  Gartner, McKinsey 분석. 투자 우선순위: AI 에이전트, Multimodal AI, Edge AI.
                 </p>
-                <div className="text-sm text-gray-400">Coming Soon</div>
-              </div>
-              <div className="bg-white p-6 rounded-lg border">
+                <div className="text-sm text-blue-600 font-semibold">자세히 보기 →</div>
+              </a>
+              <a href="/insights" className="bg-white p-6 rounded-lg border hover:shadow-lg transition">
                 <div className="text-sm text-blue-600 font-semibold mb-2">PoC</div>
-                <h4 className="text-xl font-bold mb-2">곧 공개됩니다</h4>
+                <h4 className="text-xl font-bold mb-2">유튜브 학습 자동화</h4>
                 <p className="text-gray-600 mb-4">
-                  개념 증명 프로젝트 결과를 준비 중입니다.
+                  0원 투자로 2시간 → 5분 (96% 단축). ROI 무한대. 재현 가능.
                 </p>
-                <div className="text-sm text-gray-400">Coming Soon</div>
-              </div>
+                <div className="text-sm text-blue-600 font-semibold">자세히 보기 →</div>
+              </a>
             </div>
           </div>
         </section>
