@@ -112,6 +112,16 @@ const insights = [
     tags: ['PoC', '유튜브자동화', '0원MVP', 'ROI', '재현가능'],
     quality: 95, // 38/40 = 95%
   },
+  {
+    id: '002_rag_system_zero_cost',
+    category: 'PoC',
+    title: 'RAG 시스템 0원 구축: 프로젝트 문서 자동 검색 자동화',
+    description: 'RAG (Retrieval-Augmented Generation) 시스템을 0원으로 구축. 프로젝트 문서 검색 30분 → 1분 (97% 단축). sentence-transformers + Chroma + LangChain. ROI 무한대.',
+    date: '2026-01-10',
+    readTime: '25분',
+    tags: ['PoC', 'RAG', '0원MVP', 'sentence-transformers', 'Chroma'],
+    quality: 95, // 38/40 = 95%
+  },
 ];
 
 const trends = [
@@ -124,6 +134,26 @@ const trends = [
     readTime: '20분',
     tags: ['AI트렌드', '2026', '투자가이드', 'ROI', '전략'],
     quality: 90, // 36/40 = 90%
+  },
+  {
+    id: '002_ai_agent_revolution',
+    category: '트렌드',
+    title: 'AI 에이전트 혁명: 2026년 최대 트렌드 심층 분석',
+    description: 'AI 에이전트는 2026년 가장 중요한 AI 트렌드. "지시받고 실행"하는 AI에서 "목표 설정하면 자율 실행"하는 AI로 패러다임 전환. 업무 자동화 80-95%, 월 100-200시간 절감.',
+    date: '2026-01-10',
+    readTime: '20분',
+    tags: ['AI에이전트', '자율AI', '워크플로우자동화', '2026트렌드', 'ROI분석'],
+    quality: 90,
+  },
+  {
+    id: '003_multimodal_ai_trend',
+    category: '트렌드',
+    title: '멀티모달 AI 트렌드: 인간처럼 보고 듣고 이해하는 AI의 시대',
+    description: '텍스트만 이해하던 AI가 이제 이미지, 오디오, 비디오를 통합 처리. GPT-4V, Gemini 1.5 Pro 대중화. 업무 효율 60-80% 향상, 월 100-300시간 절감.',
+    date: '2026-01-10',
+    readTime: '22분',
+    tags: ['멀티모달AI', 'GPT4V', 'Gemini', 'Claude3', '2026트렌드'],
+    quality: 90,
   },
 ];
 

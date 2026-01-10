@@ -48,12 +48,12 @@ export default function Home() {
                 <div className="text-sm text-gray-500 mt-1">평균 품질: 90%</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">1</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">3</div>
                 <div className="text-gray-600">트렌드 리포트</div>
                 <div className="text-sm text-gray-500 mt-1">5개 출처 검증</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">1</div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">2</div>
                 <div className="text-gray-600">PoC 프로젝트</div>
                 <div className="text-sm text-gray-500 mt-1">재현 가능성: 100%</div>
               </div>
