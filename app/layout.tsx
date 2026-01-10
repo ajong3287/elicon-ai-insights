@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description: "실전에서 검증된 AI 도구 분석과 트렌드 리포트. 10개 AI 도구 ROI 분석, 2026 AI 트렌드, 0원 PoC 사례.",
     images: [
       {
-        url: "https://elicon-ai-insights.vercel.app/opengraph-image",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "ELICON AI Insights Lab - AI 도구 인사이트 연구소",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     title: "ELICON AI Insights Lab - AI 도구 인사이트 연구소",
     description: "실전에서 검증된 AI 도구 분석과 트렌드 리포트. 10개 AI 도구 ROI 분석, 2026 AI 트렌드, 0원 PoC 사례.",
     creator: "@elicon_ai",
-    images: ["https://elicon-ai-insights.vercel.app/opengraph-image"],
+    images: ["/og-image.png"],
   },
   verification: {
     google: "google-site-verification-code", // 실제 코드로 교체 필요
