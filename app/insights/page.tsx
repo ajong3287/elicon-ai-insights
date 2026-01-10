@@ -1,4 +1,15 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "인사이트 아카이브",
+  description: "AI 도구 10개 심층 분석 (ChatGPT, Claude, Midjourney 등), 2026 AI 트렌드 3개 (AI 에이전트, 멀티모달 AI), 0원 PoC 2개 (유튜브 자동화, RAG 시스템). 서종원어록 기준 평균 품질 90%.",
+  openGraph: {
+    title: "인사이트 아카이브 - ELICON AI Insights Lab",
+    description: "AI 도구 10개 심층 분석, 2026 AI 트렌드 3개, 0원 PoC 2개. 서종원어록 기준 평균 품질 90%.",
+    url: "https://elicon-ai-insights.vercel.app/insights",
+  },
+};
 
 // Phase 2 완료: 10개 AI 도구 인사이트 (002-010 추가)
 const insights = [

@@ -1,3 +1,15 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "AI 도구와 트렌드, 전문가의 인사이트로",
+  description: "실전에서 검증된 AI 도구 10개 분석 (ChatGPT, Claude, Midjourney 등), 2026 AI 트렌드 3개, 0원 PoC 2개. ROI 중심 투자 의사결정 지원. 평균 품질 90%.",
+  openGraph: {
+    title: "ELICON AI Insights Lab - AI 도구와 트렌드",
+    description: "실전에서 검증된 AI 도구 10개 분석, 2026 AI 트렌드 3개, 0원 PoC 2개. ROI 중심 투자 의사결정 지원.",
+    url: "https://elicon-ai-insights.vercel.app",
+  },
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
